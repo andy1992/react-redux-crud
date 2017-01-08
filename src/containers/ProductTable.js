@@ -2,15 +2,22 @@ import React from 'react';
 import ProductRow from './../components/products/ProductRow';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { selectAllProduct, selectAllProductFailed, selectAllProductSuccess, countAllProducts, countAllProductsFailed, countAllProductsSuccess } from '../actions/products/actionCreators';
+import { selectAllProduct, selectAllProductFailed, selectAllProductSuccess } from '../actions/products/actionCreators';
 import { parseQueryString } from './../helpers/QueryString';
 import {
     ORDER_TYPE_ASC,
     ORDER_TYPE_DESC
 } from './../helpers/Pagination';
 
-const ProductTable = (props) =>
+const ProductTable = props =>
 {
+    const params = {
+        item_per_page: props.productsPerPage,
+        order_by: props.orderBy,
+        order_type: props.orderType,
+        page: props.currentPage,
+        search: props.search
+    };
     const rows = props.products.map(function(product, i) {
         return (
             <ProductRow
@@ -32,19 +39,39 @@ const ProductTable = (props) =>
                     </th>
                     <th style={{width:'20%'}}>
                         <Link
-                            onClick={() => props.sortChanged('name', props.params)}
-                            className={"fa fa-fw " + ((props.params.order_by == 'name') ? ("fa-sort-" + props.orderType) : "fa-sort")}>
-                        Name
+                            onClick={() => props.sortChanged(params, 'name')}
+                        >
+                            <i className={"fa fa-fw " + ((params.order_by == 'name') ? ("fa-sort-" + props.orderType) : "fa-sort")}>
+                                Name
+                            </i>
                         </Link>
                     </th>
                     <th style={{width:'40%'}}>
-                        Description
+                        <Link
+                            onClick={() => props.sortChanged(params, 'description')}
+                        >
+                            <i className={"fa fa-fw " + ((params.order_by == 'description') ? ("fa-sort-" + props.orderType) : "fa-sort")}>
+                                Description
+                            </i>
+                        </Link>
                     </th>
                     <th style={{width:'9%'}}>
-                        Price
+                        <Link
+                            onClick={() => props.sortChanged(params, 'price')}
+                        >
+                            <i className={"fa fa-fw " + ((params.order_by == 'price') ? ("fa-sort-" + props.orderType) : "fa-sort")}>
+                                Price
+                            </i>
+                        </Link>
                     </th>
                     <th style={{width:'9%'}}>
-                        Category
+                        <Link
+                            onClick={() => props.sortChanged(params, 'category_name')}
+                        >
+                            <i className={"fa fa-fw " + ((params.order_by == 'category_name') ? ("fa-sort-" + props.orderType) : "fa-sort")}>
+                                Category
+                            </i>
+                        </Link>
                     </th>
                     <th>Action</th>
                 </tr>
@@ -70,11 +97,10 @@ function mapStateToProps(state, props) {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        sortChanged: (orderBy, params) => {
+        sortChanged: (params, orderBy) => {
             params.order_by = orderBy;
-            params.order_type = props.order_type == ORDER_TYPE_ASC ? ORDER_TYPE_DESC : ORDER_TYPE_ASC;
+            params.order_type = params.order_type == ORDER_TYPE_ASC ? ORDER_TYPE_DESC : ORDER_TYPE_ASC;
 
-            console.log(params);
             const queryString = parseQueryString(params);
 
             browserHistory.push('/' + queryString);

@@ -9,6 +9,13 @@ import {
 
 const SearchBar = (props) =>
 {
+    const params = {
+        order_by: props.orderBy,
+        order_type: props.orderType,
+        item_per_page: props.productsPerPage,
+        search: props.search,
+        page: props.currentPage
+    };
     return (
         <div className="input-group col-md-3 margin-bottom-1em pull-left">
             <input
@@ -17,10 +24,10 @@ const SearchBar = (props) =>
                 placeholder="Type a name..."
                 required
                 id="q"
-                value={props.search}
-                onChange={() => props.inputSearchChange(props.params)} />
+                defaultValue={props.search}
+                onChange={() => props.inputSearchChange(params)} />
             <div className="input-group-btn">
-                <button className="btn btn-primary" onClick={() => props.searchProducts(props.params)}>
+                <button className="btn btn-primary" onClick={() => props.searchProducts(params)}>
                     Search
                 </button>
             </div>

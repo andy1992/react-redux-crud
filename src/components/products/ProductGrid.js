@@ -59,21 +59,31 @@ export default class ProductGrid extends React.Component {
                 </div>
                 <Loader isLoading={this.props.products.loading} />
 
-                <SearchBar params={params} />
-
-                <ProductTable products={products} params={params} />
-
-                <Pagination
+                <SearchBar
                     currentPage={currentPage}
                     search={search}
                     productsPerPage={parseInt(limit)}
+                    orderBy={orderBy}
+                    orderType={orderType} />
+
+                <ProductTable products={products}
+                              currentPage={currentPage}
+                              search={search}
+                              productsPerPage={parseInt(limit)}
+                              orderBy={orderBy}
+                              orderType={orderType} />
+
+                <Pagination
                     productsAmount={count}
+                    currentPage={currentPage}
+                    search={search}
+                    productsPerPage={parseInt(limit)}
+                    orderBy={orderBy}
+                    orderType={orderType}
                     onPageChanged={this.pageChanged}
                     itemPerPageChanged={this.itemPerPageChanged}
                     onInputPageChange={this.onInputPageChange}
-                    goToInputPage={this.goToInputPage}
-                    orderBy={orderBy}
-                    orderType={orderType} />
+                    goToInputPage={this.goToInputPage} />
             </div>
         );
     }
