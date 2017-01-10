@@ -8,7 +8,6 @@ export default class ProductService
     static getAllProducts(parameters = {})
     {
         const queryString = parseQueryString(parameters);
-        console.log(parameters);
         return axios({
             method: 'get',
             url: API_ENDPOINT + '/read_all_products.php' + queryString,
@@ -49,5 +48,17 @@ export default class ProductService
                 console.log(response.json());
                 return response.json();
             });
+    }
+
+    static getProductById(id)
+    {
+        return axios({
+            method: 'POST',
+            url: API_ENDPOINT + '/read_one_product.php',
+            header: [],
+            params: {
+                prod_id: id
+            }
+        });
     }
 }

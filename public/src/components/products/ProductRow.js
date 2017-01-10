@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 class ProductRow extends React.Component
 {
@@ -40,10 +41,10 @@ class ProductRow extends React.Component
                 <td>${parseFloat(this.props.product.price).toFixed(2)}</td>
                 <td>{this.props.product.category_name}</td>
                 <td>
-                    <a href={'#show?id='+this.props.product.id}
+                    <Link to={'/view/'+this.props.product.id}
                        className="btn btn-info m-r-1em">
                         Read
-                    </a>
+                    </Link>
                     <a href={'#update?id='+this.props.product.id}
                        className="btn btn-primary m-r-1em">
                         Edit

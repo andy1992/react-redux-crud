@@ -17,6 +17,8 @@ export const COUNT_ALL_PRODUCTS_FAILED = 'COUNT_ALL_PRODUCTS_FAILED';
 
 export const PAGINATE_PRODUCT = 'PAGINATE_PRODUCT';
 export const FIND_PRODUCT = 'FIND_PRODUCT';
+export const FIND_PRODUCT_SUCCESS = 'FIND_PRODUCT_SUCCESS';
+export const FIND_PRODUCT_FAILED = 'FIND_PRODUCT_FAILED';
 export const GET_FIRST_PRODUCT = 'GET_FIRST_PRODUCT';
 
 export const TOGGLE_ALL = 'TOGGLE_ALL';
@@ -87,16 +89,6 @@ export function updateProduct(productId, categoryId, product_name) {
     };
 }
 
-export function selectAllProduct(params) {
-    const products = productService.getAllProducts(params);
-
-    return {
-        type: SELECT_ALL_PRODUCT,
-        payload: products,
-        params
-    };
-}
-
 export function paginateProduct(params) {
     console.log('Paginate product with params: ' + params);
     return {
@@ -126,6 +118,16 @@ export function countAllProductsFailed(error) {
     }
 }
 
+export function selectAllProduct(params) {
+    const products = productService.getAllProducts(params);
+
+    return {
+        type: SELECT_ALL_PRODUCT,
+        payload: products,
+        params
+    };
+}
+
 export function selectAllProductSuccess(products) {
     return {
         type: SELECT_ALL_PRODUCT_SUCCESS,
@@ -141,10 +143,25 @@ export function selectAllProductFailed(error) {
 }
 
 export function findProduct(productId) {
-    console.log('Finding product with ID: ' + productId);
+    const product = productService.getProductById(productId);
     return {
         type: FIND_PRODUCT,
+        payload: product,
         productId
+    };
+}
+
+export function findProductSuccess(product) {
+    return {
+        type: FIND_PRODUCT_SUCCESS,
+        payload: product
+    };
+}
+
+export function findProductFailed(error) {
+    return {
+        type: FIND_PRODUCT_FAILED,
+        payload: error
     };
 }
 

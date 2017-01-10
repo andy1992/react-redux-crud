@@ -4,7 +4,7 @@ import { render } from 'react-dom';
 
 // Import Components
 import App from './containers/ProductList';
-import SingleProduct from './components/products/SingleProduct';
+import SingleProduct from './containers/SingleProduct';
 import ProductGrid from './components/products/ProductGrid';
 
 // Import react router dependencies
@@ -18,8 +18,8 @@ const router = (
         <Router history={history}>
             <Route path="/" component={App}>
                 <IndexRoute component={ProductGrid}></IndexRoute>
-                <Route path="/view/:postId" component={SingleProduct}></Route>
             </Route>
+            <Route path="/view/:productId" component={SingleProduct}></Route>
         </Router>
     </Provider>
 );
