@@ -19,6 +19,47 @@ export const PAGINATE_PRODUCT = 'PAGINATE_PRODUCT';
 export const FIND_PRODUCT = 'FIND_PRODUCT';
 export const GET_FIRST_PRODUCT = 'GET_FIRST_PRODUCT';
 
+export const TOGGLE_ALL = 'TOGGLE_ALL';
+export const REMOVE_ALL = 'REMOVE_ALL';
+export const GET_SELECTED_PRODUCTS = 'GET_SELECTED_PRODUCTS';
+export const ADD_SELECTED_PRODUCT = 'ADD_SELECTED_PRODUCT';
+export const REMOVE_SELECTED_PRODUCT = 'REMOVE_SELECTED_PRODUCT';
+
+export function toggleAll(products) {
+    return {
+        type: TOGGLE_ALL,
+        payload: products
+    }
+}
+
+export function removeAll() {
+    return {
+        type: REMOVE_ALL
+    }
+}
+
+export function getSelectedProducts() {
+    return {
+        type: GET_SELECTED_PRODUCTS
+    }
+}
+
+export function addSelectedProduct(id) {
+    console.log('Selecting product with ID : ' + id);
+    return {
+        type: ADD_SELECTED_PRODUCT,
+        payload: id
+    }
+}
+
+export function removeSelectedProduct(id) {
+    console.log('Removing product with ID : ' + id);
+    return {
+        type: REMOVE_SELECTED_PRODUCT,
+        payload: id
+    }
+}
+
 export function addProduct(categoryId, product_name) {
     console.log('Adding product');
     return {
@@ -47,14 +88,7 @@ export function updateProduct(productId, categoryId, product_name) {
 }
 
 export function selectAllProduct(params) {
-    //const products = productService.getAllProducts(params);
-    //console.log(params);
-    const queryString = parseQueryString(params);
-    const products = axios({
-        method: 'get',
-        url: API_ENDPOINT + '/read_all_products.php' + queryString,
-        header: []
-    });
+    const products = productService.getAllProducts(params);
 
     return {
         type: SELECT_ALL_PRODUCT,

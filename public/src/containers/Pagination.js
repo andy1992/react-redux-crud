@@ -10,10 +10,10 @@ const Pagination = props =>
 {
     // calculate number of pages depending on the total of records and the
     // "products per page" property
-    let pagesAmount = Math.ceil(props.productsAmount / props.productsPerPage);
-    let itemPerPage = props.productsPerPage;
-    let orderBy = props.orderBy;
-    let orderType = props.orderType;
+    let pagesAmount = Math.ceil(props.productsAmount / props.item_per_page);
+    let itemPerPage = props.item_per_page;
+    let orderBy = props.order_by;
+    let orderType = props.order_type;
     let search = props.search;
     let appendUrl = '&name=' + search + '&order_by=' + orderBy + '&order_type=' + orderType + '&item_per_page=' + itemPerPage;
     const params = {
@@ -21,13 +21,13 @@ const Pagination = props =>
         item_per_page: itemPerPage,
         order_by: orderBy,
         order_type: orderType,
-        page: props.currentPage
+        page: props.page
     };
     // creating page elements, one for each page
     let pageIndicators = [];
     for (let i=1; i <= pagesAmount; i++) {
         pageIndicators.push(
-            <li className={i == props.currentPage ? "active":""} key={i}>
+            <li className={i == props.page ? "active":""} key={i}>
                 <Link to={'?page=' + i + appendUrl} onClick={() => props.changePage({
                     search: search,
                     item_per_page: itemPerPage,
@@ -47,7 +47,7 @@ const Pagination = props =>
                     (pagesAmount - 1) <= 0 ? null :
                         <ul className='pagination pull-left margin-zero'>
                             {
-                                props.currentPage == 1 ? null :
+                                props.page == 1 ? null :
                                     <li>
                                         <Link to={'/?page=1' + appendUrl} onClick={() => props.changePage({
                                             search: search,
@@ -62,14 +62,14 @@ const Pagination = props =>
                             }
 
                             {
-                                props.currentPage == 1 ? null :
+                                props.page == 1 ? null :
                                     <li>
-                                        <Link to={'/?page='+ (props.currentPage - 1) + appendUrl} onClick={() => props.changePage({
+                                        <Link to={'/?page='+ (props.page - 1) + appendUrl} onClick={() => props.changePage({
                                             search: search,
                                             item_per_page: itemPerPage,
                                             order_by: orderBy,
                                             order_type: orderType,
-                                            page: (props.currentPage - 1)
+                                            page: (props.page - 1)
                                         })}>
                                             <span style={{marginRight: '0 .5em'}}>&lsaquo;</span>
                                         </Link>
@@ -79,14 +79,14 @@ const Pagination = props =>
                             { pageIndicators }
 
                             {
-                                props.currentPage == pagesAmount ? null :
+                                props.page == pagesAmount ? null :
                                     <li>
-                                        <Link to={'/?page='+ (parseInt(props.currentPage) + 1) + appendUrl} onClick={() => props.changePage({
+                                        <Link to={'/?page='+ (parseInt(props.page) + 1) + appendUrl} onClick={() => props.changePage({
                                             search: search,
                                             item_per_page: itemPerPage,
                                             order_by: orderBy,
                                             order_type: orderType,
-                                            page: (parseInt(props.currentPage) + 1)
+                                            page: (parseInt(props.page) + 1)
                                         })}>
                                             <span style={{marginRight: '0 .5em'}}>&rsaquo;</span>
                                         </Link>
@@ -94,7 +94,7 @@ const Pagination = props =>
                             }
 
                             {
-                                props.currentPage == pagesAmount ? null :
+                                props.page == pagesAmount ? null :
                                     <li>
                                         <Link to={'/?page=' + pagesAmount + appendUrl} onClick={() => props.changePage({
                                             search: search,
@@ -156,14 +156,15 @@ const Pagination = props =>
 
 function mapStateToProps(state, props) {
     const params = {
-        order_by: props.orderBy,
-        order_type: props.orderType,
-        item_per_page: props.productsPerPage,
+        order_by: props.order_by,
+        order_type: props.order_type,
+        item_per_page: props.item_per_page,
         search: props.search,
-        page: props.currentPage
+        page: props.page
     };
     return {
-        params: params
+        params: params,
+        state: state
     };
 }
 

@@ -1,0 +1,125 @@
+// a reducer takes in 2 things:
+// 1. the action (information about what happened)
+// 2. copy of current state
+
+//import Constant from './../helpers/constants';
+import {
+    SELECT_ALL_PRODUCT,
+    SELECT_ALL_PRODUCT_FAILED,
+    SELECT_ALL_PRODUCT_SUCCESS,
+    COUNT_ALL_PRODUCTS,
+    COUNT_ALL_PRODUCTS_FAILED,
+    COUNT_ALL_PRODUCTS_SUCCESS,
+    ADD_SELECTED_PRODUCT,
+    REMOVE_SELECTED_PRODUCT,
+    GET_SELECTED_PRODUCTS,
+    TOGGLE_ALL,
+    REMOVE_ALL
+} from './../actions/products/actionCreators';
+
+export const INITIAL_STATE = {
+    products: [],
+    selectedProducts: []
+};
+
+export function products(state = INITIAL_STATE, action) {
+    let error;
+    switch(action.type) {
+        case SELECT_ALL_PRODUCT:
+            return {
+                ...state,
+                products: [],
+                error:null,
+                loading:true
+            };
+        case SELECT_ALL_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                products: action.payload,
+                error:null,
+                loading:false
+            };
+        case SELECT_ALL_PRODUCT_FAILED:
+            error = action.payload || {message: action.payload.message};
+            return {
+                ...state,
+                products: [],
+                error:error,
+                loading: false
+            };
+        case COUNT_ALL_PRODUCTS:
+            return {
+                ...state,
+                count: 0,
+                error: null
+            };
+        case COUNT_ALL_PRODUCTS_FAILED:
+            error = action.payload || {message: action.payload.message};
+            return {
+                ...state,
+                count: 0,
+                error: error
+            };
+        case COUNT_ALL_PRODUCTS_SUCCESS:
+            return {
+                ...state,
+                count: action.payload,
+                error:null
+            };
+        default:
+            return state;
+    }
+}
+
+export function selectedProducts(state = INITIAL_STATE, action) {
+    let error;
+    switch(action.type) {
+        case GET_SELECTED_PRODUCTS:
+            //console.log(state);
+            return {
+                selectedProducts: state.selectedProducts
+            };
+        case ADD_SELECTED_PRODUCT:
+            console.log(state.selectedProducts.push(action.payload));
+            if(state.selectedProducts && state.selectedProducts.length > 0)
+                return Object.assign({}, state, {
+                    selectedProducts: (!state.selectedProducts.includes(action.payload)) ? state.selectedProducts.push(action.payload) : state.selectedProducts
+                });
+            else
+                return Object.assign({}, state, {
+                    selectedProducts: state.selectedProducts
+                });
+        case REMOVE_SELECTED_PRODUCT:
+            let i = -1;
+            if(state.selectedProducts && state.selectedProducts.length > 0)
+                if(state.selectedProducts.includes(action.payload))
+                    i = state.selectedProducts.indexOf(action.payload);
+
+            let newSelectedProducts = [];
+            for(let x = 0 ; x < state.selectedProducts.length ; x++) {
+                if(x != i)
+                    newSelectedProducts.push(state.selectedProducts[x]);
+            }
+
+            return Object.assign({}, state, {
+                selectedProducts: (i >= 0) ? newSelectedProducts : state.selectedProducts
+            });
+        case TOGGLE_ALL:
+            const products = [];
+            if(action.payload && action.payload.length > 0)
+                for(let i = 0 ; i < action.payload.length ; i++) {
+                    products.push(action.payload[i].id);
+                }
+            //console.log(products);
+            return Object.assign({}, state, {
+                selectedProducts: products
+            });
+
+        case REMOVE_ALL:
+            return Object.assign({}, state, {
+                selectedProducts: []
+            });
+        default:
+            return state;
+    }
+}

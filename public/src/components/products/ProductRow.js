@@ -2,12 +2,38 @@ import React from 'react';
 
 class ProductRow extends React.Component
 {
+    constructor(props) {
+        super(props);
+        this.state = {
+            checked: this.props.checked
+        };
+        this.onChange = this.onChange.bind(this);
+    }
+
+    onChange(e) {
+        // TODO finish the checkbox checking methods
+        this.setState({
+            checked: e.target.checked
+        });
+        if(e.target.checked)
+            this.props.addSelectedProduct(this.props.product.id);
+        else
+            this.props.removeSelectedProduct(this.props.product.id);
+    }
+
+    componentWillReceiveProps(props) {
+        // You don't have to do this check first, but it can help prevent an unneeded render
+        if (props.checked !== this.state.checked) {
+            this.setState({ checked: props.checked });
+        }
+    }
+
     render() {
         return (
             <tr>
                 <td>
                     <input type="checkbox"
-                           className='checkboxes' />
+                           className='checkboxes' onChange={this.onChange} checked={this.state.checked} />
                 </td>
                 <td>{this.props.product.name}</td>
                 <td>{this.props.product.description}</td>

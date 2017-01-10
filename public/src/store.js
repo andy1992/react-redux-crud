@@ -4,16 +4,6 @@ import { browserHistory } from 'react-router';
 
 import rootReducer from './reducers/index';
 
-//import products from './services/products/getAllProducts';
-//import categories from './services/categories/getAllCategories';
-
-import productService from './services/ProductService';
-import categoryService from './services/CategoryService';
-
-//const products = productService.getAllProducts();
-//console.log(products);
-//const categories = categoryService.getAllCategories();
-
 const defaultState = {
     products: [],
     categories: []

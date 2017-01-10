@@ -2,14 +2,15 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-    devtool: 'inline-source-map',
+    devtool: 'cheap-module-source-map',
     entry: [
         'webpack-dev-server/client?http://127.0.0.1:8080/',
         'webpack/hot/only-dev-server',
-        './main.js'
+        './public/src/main.js'
     ],
     output: {
-        path: path.join(__dirname, 'public'),
+        path: __dirname + '/public/',
+        publicPath: '/',
         filename: 'bundle.js'
     },
     resolve: {
@@ -34,11 +35,25 @@ module.exports = {
                 test: /\.css$/,
                 include: path.join(__dirname, 'src/assets/dist'),
                 loader: 'style-loader!css-loader!stylus-loader'
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loaders: ['eslint-loader', 'babel-loader']
             }
         ]
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin()
-    ]
+        new webpack.NoErrorsPlugin(),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        })
+    ],
+
+    eslint: {
+        configFile: './.eslintrc'
+    },
 };

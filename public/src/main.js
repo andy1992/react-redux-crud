@@ -3,15 +3,15 @@ import React from 'react';
 import { render } from 'react-dom';
 
 // Import Components
-import App from './src/containers/ProductList';
-import SingleProduct from './src/components/products/SingleProduct';
-import ProductGrid from './src/components/products/ProductGrid';
+import App from './containers/ProductList';
+import SingleProduct from './components/products/SingleProduct';
+import ProductGrid from './components/products/ProductGrid';
 
 // Import react router dependencies
 import { Router, Route, IndexRoute, browserHistory }  from 'react-router';
 
 import { Provider } from 'react-redux';
-import store, { history } from './src/store';
+import store, { history } from './store';
 
 const router = (
     <Provider store={store}>

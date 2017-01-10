@@ -2,7 +2,15 @@ import React from 'react';
 import ProductRow from './../components/products/ProductRow';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { selectAllProduct, selectAllProductFailed, selectAllProductSuccess } from '../actions/products/actionCreators';
+import {
+    selectAllProduct,
+    selectAllProductFailed,
+    selectAllProductSuccess,
+    addSelectedProduct,
+    removeSelectedProduct,
+    toggleAll,
+    removeAll
+} from '../actions/products/actionCreators';
 import { parseQueryString } from './../helpers/QueryString';
 import {
     ORDER_TYPE_ASC,
@@ -12,20 +20,35 @@ import {
 const ProductTable = props =>
 {
     const params = {
-        item_per_page: props.productsPerPage,
-        order_by: props.orderBy,
-        order_type: props.orderType,
-        page: props.currentPage,
+        item_per_page: props.item_per_page,
+        order_by: props.order_by,
+        order_type: props.order_type,
+        page: props.page,
         search: props.search
     };
+
     const rows = props.products.map(function(product, i) {
+        let checked = false;
+        if(props.selectedProducts) {
+            if(props.selectedProducts.length > 0) {
+                if(props.selectedProducts.includes(product.id)) {
+                    checked = true;
+                }
+            }
+        }
         return (
             <ProductRow
                 key={i}
                 product={product}
+                selectedProducts={props.selectedProducts}
+                checked={checked}
+                addSelectedProduct={props.addSelectedProduct}
+                removeSelectedProduct={props.removeSelectedProduct}
             />
         );
     }.bind(this));
+
+    const selectedProducts = [];
 
     return (
         !rows.length
@@ -35,42 +58,38 @@ const ProductTable = props =>
                 <thead>
                 <tr>
                     <th className="text-center" style={{width:'1.5%'}}>
-                        <input type="checkbox"/>
+                        <input type="checkbox" id="selectAll" onClick={() => props.toggleAll()} />
                     </th>
                     <th style={{width:'20%'}}>
                         <Link
                             onClick={() => props.sortChanged(params, 'name')}
                         >
-                            <i className={"fa fa-fw " + ((params.order_by == 'name') ? ("fa-sort-" + props.orderType) : "fa-sort")}>
-                                Name
-                            </i>
+                            Name
+                            <i className={"fa fa-fw " + ((params.order_by == 'name') ? ("fa-sort-" + props.order_type) : "fa-sort")} />
                         </Link>
                     </th>
                     <th style={{width:'40%'}}>
                         <Link
                             onClick={() => props.sortChanged(params, 'description')}
                         >
-                            <i className={"fa fa-fw " + ((params.order_by == 'description') ? ("fa-sort-" + props.orderType) : "fa-sort")}>
-                                Description
-                            </i>
+                            Description
+                            <i className={"fa fa-fw " + ((params.order_by == 'description') ? ("fa-sort-" + props.order_type) : "fa-sort")} />
                         </Link>
                     </th>
                     <th style={{width:'9%'}}>
                         <Link
                             onClick={() => props.sortChanged(params, 'price')}
                         >
-                            <i className={"fa fa-fw " + ((params.order_by == 'price') ? ("fa-sort-" + props.orderType) : "fa-sort")}>
-                                Price
-                            </i>
+                            Price
+                            <i className={"fa fa-fw " + ((params.order_by == 'price') ? ("fa-sort-" + props.order_type) : "fa-sort")} />
                         </Link>
                     </th>
                     <th style={{width:'9%'}}>
                         <Link
                             onClick={() => props.sortChanged(params, 'category_name')}
                         >
-                            <i className={"fa fa-fw " + ((params.order_by == 'category_name') ? ("fa-sort-" + props.orderType) : "fa-sort")}>
-                                Category
-                            </i>
+                            Category
+                            <i className={"fa fa-fw " + ((params.order_by == 'category_name') ? ("fa-sort-" + props.order_type) : "fa-sort")} />
                         </Link>
                     </th>
                     <th>Action</th>
@@ -84,14 +103,15 @@ const ProductTable = props =>
 };
 function mapStateToProps(state, props) {
     const params = {
-        order_by: props.orderBy,
-        order_type: props.orderType,
-        item_per_page: props.productsPerPage,
+        order_by: props.order_by,
+        order_type: props.order_type,
+        item_per_page: props.item_per_page,
         search: props.search,
-        page: props.currentPage
+        page: props.page
     };
     return {
-        params: params
+        params: params,
+        state: state
     };
 }
 
@@ -111,6 +131,19 @@ const mapDispatchToProps = (dispatch, props) => {
                     dispatch(selectAllProductSuccess(response.data)) :
                     dispatch(selectAllProductFailed(response.data));
             });
+        },
+        toggleAll: () => {
+            const checkbox = document.getElementById('selectAll');
+            if(checkbox.checked)
+                dispatch(toggleAll(props.products));
+            else
+                dispatch(removeAll());
+        },
+        addSelectedProduct: (id) => {
+            dispatch(addSelectedProduct(id));
+        },
+        removeSelectedProduct: (id) => {
+            dispatch(removeSelectedProduct(id));
         }
     };
 };

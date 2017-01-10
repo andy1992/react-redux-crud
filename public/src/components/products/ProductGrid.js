@@ -1,11 +1,9 @@
 import React from 'react';
-import { Link, browserHistory } from 'react-router';
 import ProductTable from './../../containers/ProductTable';
 import Pagination from './../../containers/Pagination';
 import SearchBar from './../../containers/SearchBar';
 import Loader from './../layouts/Loader';
 import { DEFAULT_ITEM_PER_PAGE, DEFAULT_ORDER_BY, DEFAULT_ORDER_TYPE, DEFAULT_PAGE, DEFAULT_SEARCH } from './../../helpers/Pagination';
-import { parseQueryString } from './../../helpers/QueryString';
 
 export default class ProductGrid extends React.Component {
 
@@ -17,6 +15,7 @@ export default class ProductGrid extends React.Component {
         const query = this.props.location.query;
         this.props.selectAllProduct(query);
         this.props.countAllProducts(query);
+        this.props.getSelectedProducts();
     }
 
     render() {
@@ -45,41 +44,31 @@ export default class ProductGrid extends React.Component {
             const pagesAmount = Math.ceil(count / limit);
             if(currentPage <= 0) {
                 params.page = 1;
-                currentPage = 1;
             } else if(currentPage > pagesAmount) {
                 currentPage = pagesAmount;
                 params.page = currentPage;
             }
         }
 
+        const selectedProducts = this.props.selectedProducts.selectedProducts;
+        //console.log(selectedProducts);
+
         return (
             <div>
                 <div className="page-header" style={{marginTop:70}}>
-                    <h1>Product List</h1>
+                    <h1>Products List</h1>
                 </div>
                 <Loader isLoading={this.props.products.loading} />
 
-                <SearchBar
-                    currentPage={currentPage}
-                    search={search}
-                    productsPerPage={parseInt(limit)}
-                    orderBy={orderBy}
-                    orderType={orderType} />
+                <SearchBar {...params} />
 
                 <ProductTable products={products}
-                              currentPage={currentPage}
-                              search={search}
-                              productsPerPage={parseInt(limit)}
-                              orderBy={orderBy}
-                              orderType={orderType} />
+                              {...params}
+                                selectedProducts={selectedProducts}/>
 
                 <Pagination
+                    {...params}
                     productsAmount={count}
-                    currentPage={currentPage}
-                    search={search}
-                    productsPerPage={parseInt(limit)}
-                    orderBy={orderBy}
-                    orderType={orderType}
                     onPageChanged={this.pageChanged}
                     itemPerPageChanged={this.itemPerPageChanged}
                     onInputPageChange={this.onInputPageChange}

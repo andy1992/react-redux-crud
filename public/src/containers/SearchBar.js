@@ -10,12 +10,13 @@ import {
 const SearchBar = (props) =>
 {
     const params = {
-        order_by: props.orderBy,
-        order_type: props.orderType,
-        item_per_page: props.productsPerPage,
+        order_by: props.order_by,
+        order_type: props.order_type,
+        item_per_page: props.item_per_page,
         search: props.search,
-        page: props.currentPage
+        page: props.page
     };
+
     return (
         <div className="input-group col-md-3 margin-bottom-1em pull-left">
             <input
@@ -37,14 +38,15 @@ const SearchBar = (props) =>
 
 function mapStateToProps(state, props) {
     const params = {
-        order_by: props.orderBy,
-        order_type: props.orderType,
-        item_per_page: props.productsPerPage,
+        order_by: props.order_by,
+        order_type: props.order_type,
+        item_per_page: props.item_per_page,
         search: props.search,
-        page: props.currentPage
+        page: props.page
     };
     return {
-        params: params
+        params: params,
+        state: state
     };
 }
 
@@ -54,6 +56,7 @@ const mapDispatchToProps = (dispatch, props) => {
             const search = document.getElementById("q");
             if(search && search.value == '') {
                 params.search = DEFAULT_SEARCH;
+                params.page = 1;
                 const products = dispatch(selectAllProduct(params));
                 products.payload.then((response) => {
                     !response.error ?
@@ -78,6 +81,7 @@ const mapDispatchToProps = (dispatch, props) => {
 
             params.search = search.value;
             params.item_per_page = itemPerPage.value;
+            params.page = 1;
 
             const queryString = parseQueryString(params);
             browserHistory.push('/' + queryString);

@@ -3,18 +3,29 @@
 // state to the Main component). Of course you could add custom state or action on the mapStateToProps and mapDispatchToProps methods.
 
 import { connect } from 'react-redux';
-import { selectAllProduct, selectAllProductFailed, selectAllProductSuccess, countAllProducts, countAllProductsFailed, countAllProductsSuccess } from '../actions/products/actionCreators';
+import {
+    selectAllProduct,
+    selectAllProductFailed,
+    selectAllProductSuccess,
+    countAllProducts,
+    countAllProductsFailed,
+    countAllProductsSuccess,
+    getSelectedProducts,
+    toggleAll,
+    removeAll
+} from '../actions/products/actionCreators';
 import ProductGrid from './../components/products/ProductGrid';
 
 function mapStateToProps(state, ownProps) {
     return {
         products: state.products,
         page: ownProps.location.query.page,
-        count: state.count
+        count: state.count,
+        selectedProducts: state.selectedProducts
     };
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, props) => {
     // Dispatch action
     return {
         selectAllProduct: (params) => {
@@ -32,6 +43,9 @@ const mapDispatchToProps = (dispatch) => {
                     dispatch(countAllProductsSuccess(response.data)) :
                     dispatch(countAllProductsFailed(response.data));
             });
+        },
+        getSelectedProducts: () => {
+            const selectedProducts = dispatch(getSelectedProducts());
         }
     }
 };
