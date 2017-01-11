@@ -4,21 +4,40 @@
 
 //import Constant from './../helpers/constants';
 
+import {
+    GET_ALL_CATEGORIES,
+    GET_ALL_CATEGORIES_FAILED,
+    GET_ALL_CATEGORIES_SUCCESS
+} from './../actions/categories/actionCreators';
+
 function categories(state = [], action) {
-    //console.log('The post will change');
-    //console.log(state, action);
-    //switch(action.type) {
-        /*case Constant.STORE_PRODUCT:
-            const i = action.index;
-            return [
-                ...state.slice(0, i), // before the one we are updating
-                {...state[i], likes: state[i].likes + 1},
-                ...state.slice(i + 1), // after the one we are updating
-            ]*/
-    //    default:
-    //        return state;
-    //}
-    return state;
+    let error;
+    switch(action.type) {
+        case GET_ALL_CATEGORIES:
+            return {
+                ...state,
+                categories: [],
+                loading: true,
+                error: null
+            };
+        case GET_ALL_CATEGORIES_SUCCESS:
+            return {
+                ...state,
+                categories: action.payload,
+                loading: false,
+                error: null
+            };
+        case GET_ALL_CATEGORIES_FAILED:
+            error = action.payload || {message: action.payload.message};
+            return {
+                ...state,
+                categories: [],
+                error: error,
+                loading: false
+            };
+        default:
+            return state;
+    }
 }
 
 export default categories;

@@ -1,6 +1,3 @@
-import axios from 'axios';
-import { API_ENDPOINT } from './../../helpers/Constant';
-import { parseQueryString } from './../../helpers/QueryString';
 import productService from './../../services/ProductService';
 
 export const STORE_PRODUCT = 'STORE_PRODUCT';

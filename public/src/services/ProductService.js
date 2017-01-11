@@ -52,12 +52,9 @@ export default class ProductService
 
     static getProductById(id)
     {
-        return axios({
-            method: 'POST',
-            url: API_ENDPOINT + '/read_one_product.php',
-            header: [],
-            params: {
-                prod_id: id
+        return axios.post(API_ENDPOINT + '/read_one_product.php', 'prod_id=' + id, {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
             }
         });
     }

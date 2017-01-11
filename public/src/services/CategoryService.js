@@ -1,8 +1,14 @@
+import axios from 'axios';
+import { API_ENDPOINT } from './../helpers/Constant';
+
 export default class CategoryService
 {
     static getAllCategories()
     {
-        const categories = $.get('http://localhost:8081/react-redux-crud/api/read_all_categories.php');
-        return categories;
+        return axios({
+            method: 'get',
+            url: API_ENDPOINT + '/read_all_categories.php',
+            header: []
+        });
     }
 }

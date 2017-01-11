@@ -10,9 +10,7 @@ import {
     countAllProducts,
     countAllProductsFailed,
     countAllProductsSuccess,
-    getSelectedProducts,
-    toggleAll,
-    removeAll
+    getSelectedProducts
 } from '../actions/products/actionCreators';
 import ProductGrid from './../components/products/ProductGrid';
 

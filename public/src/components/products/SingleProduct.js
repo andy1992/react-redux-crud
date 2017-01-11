@@ -8,13 +8,10 @@ export default class SingleProduct extends React.Component {
     }
 
     render() {
+        this.props.setPageTitle(this.props.product.name);
         return(
             <div>
                 <Loader isLoading={this.props.loading} />
-
-                <div className="page-header" style={{marginTop:70}}>
-                    <Link to={`/view/${this.props.product.id}`}><h1>{this.props.product.name}</h1></Link>
-                </div>
 
                 <Link to={'/'} className="btn btn-primary margin-bottom-1em">
                     Back

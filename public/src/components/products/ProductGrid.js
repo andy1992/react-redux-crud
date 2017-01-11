@@ -2,6 +2,7 @@ import React from 'react';
 import ProductTable from './../../containers/ProductTable';
 import Pagination from './../../containers/Pagination';
 import SearchBar from './../../containers/SearchBar';
+import TopActions from './../../components/products/TopActions';
 import Loader from './../layouts/Loader';
 import { DEFAULT_ITEM_PER_PAGE, DEFAULT_ORDER_BY, DEFAULT_ORDER_TYPE, DEFAULT_PAGE, DEFAULT_SEARCH } from './../../helpers/Pagination';
 import { Link } from 'react-router';
@@ -17,6 +18,7 @@ export default class ProductGrid extends React.Component {
         this.props.selectAllProduct(query);
         this.props.countAllProducts(query);
         this.props.getSelectedProducts();
+        this.props.setPageTitle('All Products');
     }
 
     render() {
@@ -56,12 +58,11 @@ export default class ProductGrid extends React.Component {
 
         return (
             <div>
-                <div className="page-header" style={{marginTop:70}}>
-                    <Link to="/"><h1>Products List</h1></Link>
-                </div>
                 <Loader isLoading={this.props.products.loading} />
 
                 <SearchBar {...params} />
+
+                <TopActions />
 
                 <ProductTable products={products}
                               {...params}
