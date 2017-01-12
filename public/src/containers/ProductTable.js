@@ -9,7 +9,13 @@ import {
     addSelectedProduct,
     removeSelectedProduct,
     toggleAll,
-    removeAll
+    removeAll,
+    deleteProducts,
+    deleteProductsFailed,
+    deleteProductsSuccess,
+    countAllProducts,
+    countAllProductsFailed,
+    countAllProductsSuccess,
 } from '../actions/products/actionCreators';
 import { parseQueryString } from './../helpers/QueryString';
 import {
@@ -44,6 +50,7 @@ const ProductTable = props =>
                 checked={checked}
                 addSelectedProduct={props.addSelectedProduct}
                 removeSelectedProduct={props.removeSelectedProduct}
+                deleteSelected={props.deleteSelected}
             />
         );
     }.bind(this));
@@ -144,6 +151,39 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         removeSelectedProduct: (id) => {
             dispatch(removeSelectedProduct(id));
+        },
+        deleteSelected: (selectedProducts) => {
+            if(selectedProducts.length > 0) {
+                const r = confirm("Are you sure you want to delete the selected product?");
+                if(r) {
+                    const response = dispatch(deleteProducts(selectedProducts));
+                    response.payload.then((response) => {
+                        if (!response.error) {
+                            dispatch(deleteProductsSuccess(response.data));
+
+                            const params = {};
+                            // Reload all products
+                            const products = dispatch(selectAllProduct(params));
+                            products.payload.then((response) => {
+                                !response.error ?
+                                    dispatch(selectAllProductSuccess(response.data)) :
+                                    dispatch(selectAllProductFailed(response.data));
+                            });
+
+                            // Recount all products
+                            const count = dispatch(countAllProducts(params));
+                            count.payload.then((response) => {
+                                !response.error ?
+                                    dispatch(countAllProductsSuccess(response.data)) :
+                                    dispatch(countAllProductsFailed(response.data));
+                            });
+                        } else
+                            dispatch(deleteProductsFailed(response.data));
+                    });
+                }
+            } else {
+                alert('Please select a product to be deleted.');
+            }
         }
     };
 };

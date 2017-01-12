@@ -4,8 +4,9 @@ export const STORE_PRODUCT = 'STORE_PRODUCT';
 export const STORE_PRODUCT_SUCCESS = 'STORE_PRODUCT_SUCCESS';
 export const STORE_PRODUCT_FAILED = 'STORE_PRODUCT_FAILED';
 
-export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
-export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+export const DELETE_PRODUCTS = 'DELETE_PRODUCTS';
+export const DELETE_PRODUCTS_FAILED = 'DELETE_PRODUCTS_FAILED';
+export const DELETE_PRODUCTS_SUCCESS = 'DELETE_PRODUCTS_SUCCESS';
 
 export const SELECT_ALL_PRODUCT = 'SELECT_ALL_PRODUCT';
 export const SELECT_ALL_PRODUCT_SUCCESS = 'SELECT_ALL_PRODUCT_SUCCESS';
@@ -15,14 +16,13 @@ export const COUNT_ALL_PRODUCTS = 'COUNT_ALL_PRODUCTS';
 export const COUNT_ALL_PRODUCTS_SUCCESS = 'COUNT_ALL_PRODUCTS_SUCCESS';
 export const COUNT_ALL_PRODUCTS_FAILED = 'COUNT_ALL_PRODUCTS_FAILED';
 
-export const PAGINATE_PRODUCT = 'PAGINATE_PRODUCT';
 export const FIND_PRODUCT = 'FIND_PRODUCT';
 export const FIND_PRODUCT_SUCCESS = 'FIND_PRODUCT_SUCCESS';
 export const FIND_PRODUCT_FAILED = 'FIND_PRODUCT_FAILED';
-export const GET_FIRST_PRODUCT = 'GET_FIRST_PRODUCT';
 
 export const TOGGLE_ALL = 'TOGGLE_ALL';
 export const REMOVE_ALL = 'REMOVE_ALL';
+
 export const GET_SELECTED_PRODUCTS = 'GET_SELECTED_PRODUCTS';
 export const ADD_SELECTED_PRODUCT = 'ADD_SELECTED_PRODUCT';
 export const REMOVE_SELECTED_PRODUCT = 'REMOVE_SELECTED_PRODUCT';
@@ -49,7 +49,6 @@ export function getSelectedProducts() {
 }
 
 export function addSelectedProduct(id) {
-    console.log('Selecting product with ID : ' + id);
     return {
         type: ADD_SELECTED_PRODUCT,
         payload: id
@@ -57,7 +56,6 @@ export function addSelectedProduct(id) {
 }
 
 export function removeSelectedProduct(id) {
-    console.log('Removing product with ID : ' + id);
     return {
         type: REMOVE_SELECTED_PRODUCT,
         payload: id
@@ -94,31 +92,29 @@ export function resetSaveProductStatus() {
     };
 }
 
-export function deleteProduct(productId) {
-    console.log('Deleting product with ID: ' + productId);
+export function deleteProducts(selectedProducts) {
+    const responseText = productService.deleteProducts(selectedProducts);
     return {
-        type: DELETE_PRODUCT,
-        productId,
+        type: DELETE_PRODUCTS,
+        payload: responseText,
+        selectedProducts
     };
 }
 
-export function updateProduct(productId, categoryId, product_name) {
-    console.log('Updating product with ID: ' + productId);
+export function deleteProductsFailed(error) {
     return {
-        type: UPDATE_PRODUCT,
-        categoryId,
-        product_name,
-        productId
-    };
+        type: DELETE_PRODUCTS_FAILED,
+        payload: error
+    }
 }
 
-export function paginateProduct(params) {
-    console.log('Paginate product with params: ' + params);
+export function deleteProductsSuccess(responseText) {
     return {
-        type: PAGINATE_PRODUCT,
-        params
-    };
+        type: DELETE_PRODUCTS_FAILED,
+        payload: responseText
+    }
 }
+
 
 export function countAllProducts(params) {
     return {
@@ -185,14 +181,5 @@ export function findProductFailed(error) {
     return {
         type: FIND_PRODUCT_FAILED,
         payload: error
-    };
-}
-
-export function getFirstProduct(params) {
-    console.log('Finding first product with ID: ' + params);
-    return {
-        type: GET_FIRST_PRODUCT,
-        params,
-        product: productService.getFirstProduct(params)
     };
 }

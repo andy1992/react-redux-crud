@@ -11,7 +11,7 @@ export default class TopActions extends React.Component {
                         Create Product
                     </Link>
 
-                    <button className="btn btn-danger margin-bottom-1em pull-right" style={{marginRight:'10px'}}>
+                    <button className="btn btn-danger margin-bottom-1em pull-right" onClick={() => this.props.deleteSelected(this.props.selectedProducts)} style={{marginRight:'10px'}}>
                         <span className='glyphicon glyphicon-trash'></span>&nbsp;
                         Delete Selected Products
                     </button>

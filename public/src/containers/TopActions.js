@@ -1,55 +1,66 @@
 import React from 'react';
-import { Link, browserHistory } from 'react-router';
+import TopActions from './../components/products/TopActions';
+import { connect } from 'react-redux';
+import {
+    deleteProducts,
+    deleteProductsFailed,
+    deleteProductsSuccess,
+    selectAllProduct,
+    selectAllProductFailed,
+    selectAllProductSuccess,
+    countAllProducts,
+    countAllProductsFailed,
+    countAllProductsSuccess,
+    removeAll
+} from './../actions/products/actionCreators';
 
-export default class TopActions extends React.Component {
-    render() {
-        return (
-            <div className="">
-                <div>
-                    <Link to={'/product/create'} className="btn btn-primary margin-bottom-1em pull-right" >
-                        <span className='glyphicon glyphicon-plus'></span>&nbsp;
-                        Create Product
-                    </Link>
-
-                    <button className="btn btn-danger margin-bottom-1em pull-right" style={{marginRight:'10px'}}>
-                        <span className='glyphicon glyphicon-trash'></span>&nbsp;
-                        Delete Selected Products
-                    </button>
-                </div>
-            </div>
-        )
-    }
-}
-/*
 function mapStateToProps(state, props) {
-    const params = {
-        order_by: props.orderBy,
-        order_type: props.orderType,
-        item_per_page: props.productsPerPage,
-        search: props.search,
-        page: props.currentPage
-    };
     return {
-        params: params,
+        props: props,
         state: state
     };
 }
 
-const mapDispatchToProps = (dispatch, props) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        sortChanged: (params, orderBy) => {
-            const queryString = parseQueryString(params);
+        deleteSelected: (selectedProducts) => {
+            if(selectedProducts.length > 0) {
+                const r = confirm("Are you sure you want to delete the selected product(s)?");
+                if(r) {
+                    const response = dispatch(deleteProducts(selectedProducts));
+                    response.payload.then((response) => {
+                        if (!response.error) {
+                            dispatch(deleteProductsSuccess(response.data));
 
-            browserHistory.push('/' + queryString);
+                            const params = {};
+                            // Reload all products
+                            const products = dispatch(selectAllProduct(params));
+                            products.payload.then((response) => {
+                                !response.error ?
+                                    dispatch(selectAllProductSuccess(response.data)) :
+                                    dispatch(selectAllProductFailed(response.data));
+                            });
 
-            const products = dispatch(selectAllProduct(params));
-            products.payload.then((response) => {
-                !response.error ?
-                    dispatch(selectAllProductSuccess(response.data)) :
-                    dispatch(selectAllProductFailed(response.data));
-            });
+                            // Recount all products
+                            const count = dispatch(countAllProducts(params));
+                            count.payload.then((response) => {
+                                !response.error ?
+                                    dispatch(countAllProductsSuccess(response.data)) :
+                                    dispatch(countAllProductsFailed(response.data));
+                            });
+
+                            dispatch(removeAll());
+                        } else
+                            dispatch(deleteProductsFailed(response.data));
+                    });
+                }
+            } else {
+                alert('Please select one or more products to be deleted.');
+            }
         }
     };
 };
 
-const ProductTableComponent = connect(mapStateToProps, mapDispatchToProps)(ProductTable);*/
+const TopActionsComponent = connect(mapStateToProps, mapDispatchToProps)(TopActions);
+
+export default TopActionsComponent;

@@ -21,7 +21,10 @@ import {
     STORE_PRODUCT,
     STORE_PRODUCT_SUCCESS,
     STORE_PRODUCT_FAILED,
-    RESET_SAVE_PRODUCT_STATUS
+    RESET_SAVE_PRODUCT_STATUS,
+    DELETE_PRODUCTS,
+    DELETE_PRODUCTS_FAILED,
+    DELETE_PRODUCTS_SUCCESS
 } from './../actions/products/actionCreators';
 
 export const INITIAL_STATE = {
@@ -127,6 +130,28 @@ export function products(state = INITIAL_STATE, action) {
                 error: null,
                 loading: false
             };
+        case DELETE_PRODUCTS:
+            return {
+                ...state,
+                response: null,
+                error:null,
+                loading: true
+            };
+        case DELETE_PRODUCTS_SUCCESS:
+            return {
+                ...state,
+                response: action.payload,
+                error: null,
+                loading: false
+            };
+        case DELETE_PRODUCTS_FAILED:
+            error = action.payload || {message: action.payload.message};
+            return {
+                ...state,
+                response: false,
+                error: error,
+                loading: false
+            };
         default:
             return state;
     }
@@ -136,20 +161,18 @@ export function selectedProducts(state = INITIAL_STATE, action) {
     let error;
     switch(action.type) {
         case GET_SELECTED_PRODUCTS:
-            //console.log(state);
             return {
                 selectedProducts: state.selectedProducts
             };
         case ADD_SELECTED_PRODUCT:
-            console.log(state.selectedProducts.push(action.payload));
-            if(state.selectedProducts && state.selectedProducts.length > 0)
-                return Object.assign({}, state, {
-                    selectedProducts: (!state.selectedProducts.includes(action.payload)) ? state.selectedProducts.push(action.payload) : state.selectedProducts
-                });
-            else
-                return Object.assign({}, state, {
-                    selectedProducts: state.selectedProducts
-                });
+            let newProducts = [];
+            if(state.selectedProducts)
+                newProducts = state.selectedProducts;
+            newProducts.push(action.payload);
+
+            return Object.assign({}, state, {
+                selectedProducts: newProducts
+            });
         case REMOVE_SELECTED_PRODUCT:
             let i = -1;
             if(state.selectedProducts && state.selectedProducts.length > 0)
@@ -171,7 +194,6 @@ export function selectedProducts(state = INITIAL_STATE, action) {
                 for(let i = 0 ; i < action.payload.length ; i++) {
                     products.push(action.payload[i].id);
                 }
-            //console.log(products);
             return Object.assign({}, state, {
                 selectedProducts: products
             });

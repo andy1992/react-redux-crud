@@ -66,7 +66,7 @@ class ProductForm extends React.Component {
 
     componentWillReceiveProps(props) {
         if(props.params.productId) {
-            if(this.state.successCreation == null) {
+            if(props.successCreation == null) {
                 if (props.product) {
                     this.setState({
                         id: props.product.id,

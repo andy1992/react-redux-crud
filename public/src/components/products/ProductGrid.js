@@ -2,7 +2,7 @@ import React from 'react';
 import ProductTable from './../../containers/ProductTable';
 import Pagination from './../../containers/Pagination';
 import SearchBar from './../../containers/SearchBar';
-import TopActions from './../../components/products/TopActions';
+import TopActions from './../../containers/TopActions';
 import Loader from './../layouts/Loader';
 import { DEFAULT_ITEM_PER_PAGE, DEFAULT_ORDER_BY, DEFAULT_ORDER_TYPE, DEFAULT_PAGE, DEFAULT_SEARCH } from './../../helpers/Pagination';
 import { Link } from 'react-router';
@@ -62,7 +62,7 @@ export default class ProductGrid extends React.Component {
 
                 <SearchBar {...params} />
 
-                <TopActions />
+                <TopActions selectedProducts={selectedProducts} />
 
                 <ProductTable products={products}
                               {...params}

@@ -1,6 +1,7 @@
 import { API_ENDPOINT } from './../helpers/Constant';
 import axios from 'axios';
 import { parseQueryString } from './../helpers/QueryString';
+import querystring from 'querystring';
 
 export default class ProductService
 {
@@ -47,5 +48,22 @@ export default class ProductService
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         });
+    }
+
+    static deleteProducts(selectedProducts)
+    {
+        let url = '/delete_products.php';
+
+        let query = '';
+        for(let i = 0 ; i < selectedProducts.length ; i++) {
+            query += 'del_ids[]=' + selectedProducts[i] + '&';
+        }
+
+        return axios.post(API_ENDPOINT + url, query, {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        });
+
     }
 }

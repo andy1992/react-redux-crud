@@ -23,6 +23,7 @@ class ProductRow extends React.Component
     }
 
     componentWillReceiveProps(props) {
+        //console.log(props);
         // You don't have to do this check first, but it can help prevent an unneeded render
         if (props.checked !== this.state.checked) {
             this.setState({ checked: props.checked });
@@ -41,18 +42,19 @@ class ProductRow extends React.Component
                 <td>${parseFloat(this.props.product.price).toFixed(2)}</td>
                 <td>{this.props.product.category_name}</td>
                 <td>
-                    <Link to={'/view/'+this.props.product.id}
+                    <Link to={'/view/' + this.props.product.id}
                        className="btn btn-info m-r-1em">
                         Read
                     </Link>
-                    <Link to={'/product/edit/'+this.props.product.id}
+                    <Link to={'/product/edit/' + this.props.product.id}
                        className="btn btn-primary m-r-1em">
                         Edit
                     </Link>
-                    <a href={'#delete?id='+this.props.product.id}
+                    <button
+                        onClick={() => this.props.deleteSelected([this.props.product.id])}
                        className="btn btn-danger">
                         Delete
-                    </a>
+                    </button>
                 </td>
             </tr>
         );
