@@ -25,34 +25,24 @@ export default class ProductService
         });
     }
 
-    static paginateProducts(parameters = {})
-    {
-        const queryString = parseQueryString(parameters);
-        return fetch(API_ENDPOINT + '/read_all_products.php' + queryString)
-            .then(function(response) {
-                if (response.status >= 400) {
-                    throw new Error("Bad response from server");
-                }
-                return response.json();
-            });
-    }
-
-    static getFirstProduct(parameters = {})
-    {
-        const queryString = parseQueryString(parameters);
-        return fetch(API_ENDPOINT + '/read_one_product.php' + queryString)
-            .then(function(response) {
-                if (response.status >= 400) {
-                    throw new Error("Bad response from server");
-                }
-                console.log(response.json());
-                return response.json();
-            });
-    }
-
     static getProductById(id)
     {
         return axios.post(API_ENDPOINT + '/read_one_product.php', 'prod_id=' + id, {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        });
+    }
+
+    static storeProduct(values)
+    {
+        let url = '/create_product.php';
+        let query = 'name=' + values.name + '&price=' + values.price + '&description=' + values.description + '&category_id=' + values.category_id;
+        if(values.id != null) {
+            url = '/update_product.php';
+            query += '&id=' + values.id;
+        }
+        return axios.post(API_ENDPOINT + url, query, {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }

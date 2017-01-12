@@ -1,6 +1,9 @@
 import productService from './../../services/ProductService';
 
 export const STORE_PRODUCT = 'STORE_PRODUCT';
+export const STORE_PRODUCT_SUCCESS = 'STORE_PRODUCT_SUCCESS';
+export const STORE_PRODUCT_FAILED = 'STORE_PRODUCT_FAILED';
+
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 
@@ -23,6 +26,8 @@ export const REMOVE_ALL = 'REMOVE_ALL';
 export const GET_SELECTED_PRODUCTS = 'GET_SELECTED_PRODUCTS';
 export const ADD_SELECTED_PRODUCT = 'ADD_SELECTED_PRODUCT';
 export const REMOVE_SELECTED_PRODUCT = 'REMOVE_SELECTED_PRODUCT';
+
+export const RESET_SAVE_PRODUCT_STATUS = 'RESET_SAVE_PRODUCT_STATUS';
 
 export function toggleAll(products) {
     return {
@@ -59,12 +64,33 @@ export function removeSelectedProduct(id) {
     }
 }
 
-export function addProduct(categoryId, product_name) {
-    console.log('Adding product');
+export function storeProduct(values) {
+    const responseText = productService.storeProduct(values);
     return {
         type: STORE_PRODUCT,
-        categoryId,
-        product_name
+        payload: responseText,
+        values
+    };
+}
+
+export function storeProductSuccess(responseText) {
+    return {
+        type: STORE_PRODUCT_SUCCESS,
+        payload: responseText
+    };
+}
+
+export function storeProductFailed(error) {
+    return {
+        type: STORE_PRODUCT_SUCCESS,
+        payload: error
+    };
+}
+
+export function resetSaveProductStatus() {
+    return {
+        type: RESET_SAVE_PRODUCT_STATUS,
+        payload: null
     };
 }
 

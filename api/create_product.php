@@ -22,10 +22,10 @@ if($_POST){
         $result = "The product name must be filled.";
     } else if(is_null($_POST['price']) || empty($_POST['price'])) {
         $result = "The price must be filled.";
-    } else if(is_null($_POST['description']) || empty($_POST['description'])) {
-        $result = "The description must be filled.";
-    } else if(is_null($_POST['category_id']) || empty($_POST['category_id'])) {
+    } else if(is_null($_POST['category_id']) || empty($_POST['category_id']) || $_POST['category_id'] == '-1') {
         $result = "The category must be selected.";
+    } else if(is_null($_POST['description']) || empty($_POST['description'])) {
+         $result = "The description must be filled.";
     } else {
         $product->name = $_POST['name'];
         $product->price = $_POST['price'];

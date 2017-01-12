@@ -17,13 +17,18 @@ import {
     REMOVE_SELECTED_PRODUCT,
     GET_SELECTED_PRODUCTS,
     TOGGLE_ALL,
-    REMOVE_ALL
+    REMOVE_ALL,
+    STORE_PRODUCT,
+    STORE_PRODUCT_SUCCESS,
+    STORE_PRODUCT_FAILED,
+    RESET_SAVE_PRODUCT_STATUS
 } from './../actions/products/actionCreators';
 
 export const INITIAL_STATE = {
     products: [],
     selectedProducts: [],
-    product: {}
+    product: {},
+    successCreation: false
 };
 
 // the name of function will be the state name
@@ -91,6 +96,35 @@ export function products(state = INITIAL_STATE, action) {
                 ...state,
                 product: {},
                 error: error,
+                loading: false
+            };
+        case STORE_PRODUCT:
+            return {
+                ...state,
+                response: false,
+                error: null,
+                loading: true
+            };
+        case STORE_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                response: action.payload,
+                error: null,
+                loading: false
+            };
+        case STORE_PRODUCT_FAILED:
+            error = action.payload || {message: action.payload.message};
+            return {
+                ...state,
+                response: false,
+                error: error,
+                loading: true
+            };
+        case RESET_SAVE_PRODUCT_STATUS:
+            return {
+                ...state,
+                response: action.payload,
+                error: null,
                 loading: false
             };
         default:

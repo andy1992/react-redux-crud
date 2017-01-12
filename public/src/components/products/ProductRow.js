@@ -45,10 +45,10 @@ class ProductRow extends React.Component
                        className="btn btn-info m-r-1em">
                         Read
                     </Link>
-                    <a href={'#update?id='+this.props.product.id}
+                    <Link to={'/product/edit/'+this.props.product.id}
                        className="btn btn-primary m-r-1em">
                         Edit
-                    </a>
+                    </Link>
                     <a href={'#delete?id='+this.props.product.id}
                        className="btn btn-danger">
                         Delete
