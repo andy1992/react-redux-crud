@@ -5,7 +5,9 @@ import {
 } from './../actions/userActions';
 
 const INITIAL_STATE = {
-    user: {}
+    response: '',
+    loading: false,
+    error: null
 };
 
 export default function register(state = INITIAL_STATE, action) {

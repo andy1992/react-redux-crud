@@ -8,6 +8,7 @@ import SingleProduct from './containers/products/SingleProduct';
 import Main from './containers/Main';
 import ProductForm from './containers/products/ProductForm';
 import LoginForm from './containers/auth/Login';
+import RegistrationForm from './containers/user/Register';
 
 // Import react router dependencies
 import { Router, Route, IndexRoute, browserHistory }  from 'react-router';
@@ -24,6 +25,7 @@ const router = (
                 <Route path="/product/create" component={ProductForm}></Route>
                 <Route path="/product/edit/:productId" component={ProductForm}></Route>
                 <Route path="/login" component={LoginForm}></Route>
+                <Route path="/register" component={RegistrationForm}></Route>
             </Route>
         </Router>
     </Provider>

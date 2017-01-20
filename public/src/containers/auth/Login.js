@@ -23,10 +23,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         login: (credentials) => {
             const resp = dispatch(login(credentials));
-            console.log(resp);
             resp.payload.then((response) => {
                 if(response.user) {
-                    console.log(response);
                     dispatch(loginSuccess(response));
 
                     if(response.user) {

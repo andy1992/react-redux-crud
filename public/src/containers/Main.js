@@ -35,6 +35,7 @@ const mapDispatchToProps = (dispatch) => {
                 if(response) {
                     logoutSuccess(response);
 
+                    // Update is logged in state
                     const isLogged = dispatch(isLoggedIn());
                     isLogged.payload.then((response) => {
                         if(response.user) {
