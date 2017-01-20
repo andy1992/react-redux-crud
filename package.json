@@ -1,7 +1,7 @@
 {
   "name": "react-redux-crud",
   "version": "1.0.0",
-  "description": "simple Redux sample app",
+  "description": "A simple React + Redux + React Router CRUD app",
   "main": "main.js",
   "scripts": {
     "test": "test",
