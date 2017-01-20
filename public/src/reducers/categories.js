@@ -8,9 +8,13 @@ import {
     GET_ALL_CATEGORIES,
     GET_ALL_CATEGORIES_FAILED,
     GET_ALL_CATEGORIES_SUCCESS
-} from './../actions/categories/actionCreators';
+} from '../actions/categoryActions';
 
-function categories(state = [], action) {
+const INITIAL_STATE = {
+    categories: []
+};
+
+function categories(state = INITIAL_STATE, action) {
     let error;
     switch(action.type) {
         case GET_ALL_CATEGORIES:

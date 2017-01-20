@@ -3,10 +3,11 @@ import React from 'react';
 import { render } from 'react-dom';
 
 // Import Components
-import App from './containers/ProductList';
-import SingleProduct from './containers/SingleProduct';
-import Main from './components/Main';
-import ProductForm from './containers/ProductForm';
+import App from './containers/products/ProductList';
+import SingleProduct from './containers/products/SingleProduct';
+import Main from './containers/Main';
+import ProductForm from './containers/products/ProductForm';
+import LoginForm from './containers/auth/Login';
 
 // Import react router dependencies
 import { Router, Route, IndexRoute, browserHistory }  from 'react-router';
@@ -22,6 +23,7 @@ const router = (
                 <Route path="/view/:productId" component={SingleProduct}></Route>
                 <Route path="/product/create" component={ProductForm}></Route>
                 <Route path="/product/edit/:productId" component={ProductForm}></Route>
+                <Route path="/login" component={LoginForm}></Route>
             </Route>
         </Router>
     </Provider>

@@ -1,10 +1,10 @@
-import ProductForm from '../components/products/ProductForm';
+import ProductForm from '../../components/products/ProductForm';
 import { connect } from 'react-redux';
 import {
     getAllCategories,
     getAllCategoriesFailed,
     getAllCategoriesSuccess,
-} from '../actions/categories/actionCreators';
+} from '../../actions/categoryActions';
 
 import {
     storeProduct,
@@ -14,7 +14,7 @@ import {
     findProductFailed,
     findProductSuccess,
     resetSaveProductStatus
-} from '../actions/products/actionCreators';
+} from '../../actions/productActions';
 
 function mapStateToProps(state, ownProps) {
     let product = {};

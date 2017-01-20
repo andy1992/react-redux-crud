@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductRow from './../components/products/ProductRow';
+import ProductRow from '../../components/products/ProductRow';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import {
@@ -16,12 +16,12 @@ import {
     countAllProducts,
     countAllProductsFailed,
     countAllProductsSuccess,
-} from '../actions/products/actionCreators';
-import { parseQueryString } from './../helpers/QueryString';
+} from '../../actions/productActions';
+import { parseQueryString } from '../../helpers/QueryString';
 import {
     ORDER_TYPE_ASC,
     ORDER_TYPE_DESC
-} from './../helpers/Pagination';
+} from '../../helpers/Pagination';
 
 const ProductTable = props =>
 {
@@ -44,6 +44,8 @@ const ProductTable = props =>
         }
         return (
             <ProductRow
+                isLoggedIn={props.isLoggedIn}
+                user={props.user}
                 key={i}
                 product={product}
                 selectedProducts={props.selectedProducts}

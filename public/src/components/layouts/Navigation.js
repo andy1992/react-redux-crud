@@ -6,17 +6,32 @@ class NavComponent extends React.Component
     render() {
         return(
             <div>
-                <nav className="navbar navbar-default navbar-fixed-top">
-                    <div className="container">
-                        <div id="navbar" className="collapse navbar-collapse">
-                            <ul className="nav navbar-nav">
-                                <li><Link to={'/'}>Home</Link></li>
-                                <li><a href="#login">Sign In</a></li>
-                                <li><a href="#register">Sign Up</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+                {
+                    (!this.props.isLoggedIn) ?
+                        <nav className="navbar navbar-default navbar-fixed-top">
+                            <div className="container">
+                                <div id="navbar" className="collapse navbar-collapse">
+                                    <ul className="nav navbar-nav">
+                                        <li><Link to={'/'}>Home</Link></li>
+                                        <li><Link to={'/login'}>Sign In</Link></li>
+                                        <li><Link to={'/register'}>Sign Up</Link></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    :
+                        <nav className="navbar navbar-default navbar-fixed-top">
+                            <div className="container">
+                                <div id="navbar" className="collapse navbar-collapse">
+                                    <ul className="nav navbar-nav">
+                                        <li><Link to={'/'}>Home</Link></li>
+                                        <li style={{paddingTop:15}}>Welcome, {this.props.user.email}</li>
+                                        <li><Link onClick={this.props.signOut}>Sign Out</Link></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                }
             </div>
         );
     }

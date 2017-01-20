@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 
 class ProductForm extends React.Component {
 
@@ -23,13 +23,17 @@ class ProductForm extends React.Component {
     }
 
     componentWillMount() {
-        this.props.resetStatus();
-        if(this.props.params.productId)
-            this.props.findProduct(this.props.params.productId);
-        this.props.getAllCategories();
-        this.setState({
-            successCreation: null
-        });
+        if(!this.props.isLoggedIn) {
+            browserHistory.push('/');
+        } else {
+            this.props.resetStatus();
+            if (this.props.params.productId)
+                this.props.findProduct(this.props.params.productId);
+            this.props.getAllCategories();
+            this.setState({
+                successCreation: null
+            });
+        }
     }
 
     componentDidMount() {

@@ -31,6 +31,7 @@ class ProductRow extends React.Component
     }
 
     render() {
+        const display = (this.props.isLoggedIn) ? '' : 'none';
         return (
             <tr>
                 <td>
@@ -46,13 +47,16 @@ class ProductRow extends React.Component
                        className="btn btn-info m-r-1em">
                         Read
                     </Link>
-                    <Link to={'/product/edit/' + this.props.product.id}
-                       className="btn btn-primary m-r-1em">
-                        Edit
-                    </Link>
-                    <button
-                        onClick={() => this.props.deleteSelected([this.props.product.id])}
-                       className="btn btn-danger">
+                    {
+                        (this.props.isLoggedIn)
+                            ?
+                            <Link to={'/product/edit/' + this.props.product.id}
+                                  className="btn btn-primary m-r-1em">
+                                Edit
+                            </Link>
+                            : null
+                    }
+                    <button style={{display:display}} onClick={() => this.props.deleteSelected([this.props.product.id])} className="btn btn-danger">
                         Delete
                     </button>
                 </td>

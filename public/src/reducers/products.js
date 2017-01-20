@@ -25,7 +25,7 @@ import {
     DELETE_PRODUCTS,
     DELETE_PRODUCTS_FAILED,
     DELETE_PRODUCTS_SUCCESS
-} from './../actions/products/actionCreators';
+} from '../actions/productActions';
 
 export const INITIAL_STATE = {
     products: [],

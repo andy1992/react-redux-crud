@@ -1,7 +1,12 @@
 <?php
 
-session_start();
+if(session_status() == PHP_SESSION_NONE)
+    session_start();
 
 session_destroy();
 
-echo "ok";
+$callback = 'callback';
+if(isset($_REQUEST['callback']))
+    $callback = $_REQUEST['callback'];
+
+echo $callback . "('ok')";

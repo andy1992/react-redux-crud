@@ -1,4 +1,8 @@
 <?php
+
+if(session_status() == PHP_SESSION_NONE)
+    session_start();
+
 class User{
 
     // database connection and table name
@@ -33,7 +37,6 @@ class User{
             if(count($results) > 0) {
                 $result = $results[0];
                 if(password_verify($this->password, $result->password)) {
-                    session_start();
                     $user = $result;
                     $_SESSION['id'] = $user->id;
                     $_SESSION['email'] = $user->email;

@@ -1,10 +1,10 @@
-import SingleProduct from './../components/products/SingleProduct';
+import SingleProduct from '../../components/products/SingleProduct';
 import { connect } from 'react-redux';
 import {
     findProduct,
     findProductFailed,
     findProductSuccess
-} from './../actions/products/actionCreators';
+} from '../../actions/productActions';
 
 function mapStateToProps(state, ownProps) {
     let product = {};

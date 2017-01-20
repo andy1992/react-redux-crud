@@ -1,8 +1,8 @@
 import React from 'react';
-import ProductTable from './../../containers/ProductTable';
-import Pagination from './../../containers/Pagination';
-import SearchBar from './../../containers/SearchBar';
-import TopActions from './../../containers/TopActions';
+import ProductTable from '../../containers/products/ProductTable';
+import Pagination from '../../containers/products/Pagination';
+import SearchBar from '../../containers/products/SearchBar';
+import TopActions from '../../containers/products/TopActions';
 import Loader from './../layouts/Loader';
 import { DEFAULT_ITEM_PER_PAGE, DEFAULT_ORDER_BY, DEFAULT_ORDER_TYPE, DEFAULT_PAGE, DEFAULT_SEARCH } from './../../helpers/Pagination';
 import { Link } from 'react-router';
@@ -62,9 +62,14 @@ export default class ProductGrid extends React.Component {
 
                 <SearchBar {...params} />
 
-                <TopActions selectedProducts={selectedProducts} />
+                {
+                    (this.props.isLoggedIn)
+                        ?
+                        <TopActions selectedProducts={selectedProducts} />
+                        : null
+                }
 
-                <ProductTable products={products}
+                <ProductTable isLoggedIn={this.props.isLoggedIn} user={this.props.user} products={products}
                               {...params}
                                 selectedProducts={selectedProducts}/>
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { selectAllProduct, selectAllProductFailed, selectAllProductSuccess, countAllProducts, countAllProductsFailed, countAllProductsSuccess } from '../actions/products/actionCreators';
-import { parseQueryString } from './../helpers/QueryString';
+import { selectAllProduct, selectAllProductFailed, selectAllProductSuccess, countAllProducts, countAllProductsFailed, countAllProductsSuccess } from '../../actions/productActions';
+import { parseQueryString } from '../../helpers/QueryString';
 import {
     DEFAULT_SEARCH,
-} from './../helpers/Pagination';
+} from '../../helpers/Pagination';
 
 const SearchBar = (props) =>
 {

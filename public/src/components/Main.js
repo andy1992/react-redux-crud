@@ -9,6 +9,11 @@ class Main extends React.Component {
             pageTitle: ''
         };
         this.setPageTitle = this.setPageTitle.bind(this);
+        this.signOut = this.signOut.bind(this);
+    }
+
+    componentWillMount() {
+        this.props.isLoggedIn();
     }
 
     setPageTitle(title) {
@@ -17,16 +22,20 @@ class Main extends React.Component {
         });
     }
 
+    signOut() {
+        this.props.signOut();
+    }
+
     render() {
         return (
             <div>
-                <NavBar />
+                <NavBar signOut={this.signOut} isLoggedIn={this.props.state.auth.isLoggedIn} user={this.props.state.auth.user} />
 
                 <div className="page-header" style={{marginTop:70}}>
                     <h1>{this.state.pageTitle}</h1>
                 </div>
 
-                {React.cloneElement(this.props.children, {...this.props, setPageTitle: this.setPageTitle})}
+                {React.cloneElement(this.props.children, {...this.props, setPageTitle: this.setPageTitle, isLoggedIn: this.props.state.auth.isLoggedIn, user:this.props.state.auth.user})}
             </div>
         )
     }

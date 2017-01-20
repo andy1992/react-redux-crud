@@ -11,8 +11,8 @@ import {
     countAllProductsFailed,
     countAllProductsSuccess,
     getSelectedProducts
-} from '../actions/products/actionCreators';
-import ProductGrid from './../components/products/ProductGrid';
+} from '../../actions/productActions';
+import ProductGrid from '../../components/products/ProductGrid';
 
 function mapStateToProps(state, ownProps) {
     return {

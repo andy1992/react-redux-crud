@@ -56,4 +56,15 @@ module.exports = {
     eslint: {
         configFile: './.eslintrc'
     },
+
+    // Add proxy in case you need to bypass CORS, for example in your local dev environment
+    /*devServer: {
+        proxy: {
+            '/react-redux-crud/api': {
+                target: 'http://localhost:8081',
+                secure: false,
+                changeOrigin: true
+            }
+        }
+    }*/
 };

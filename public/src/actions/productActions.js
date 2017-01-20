@@ -1,4 +1,4 @@
-import productService from './../../services/ProductService';
+import productService from '../services/ProductService';
 
 export const STORE_PRODUCT = 'STORE_PRODUCT';
 export const STORE_PRODUCT_SUCCESS = 'STORE_PRODUCT_SUCCESS';

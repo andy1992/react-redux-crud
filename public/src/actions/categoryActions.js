@@ -1,4 +1,4 @@
-import categoryService from './../../services/CategoryService';
+import categoryService from '../services/CategoryService';
 
 export const GET_ALL_CATEGORIES = 'GET_ALL_CATEGORIES';
 export const GET_ALL_CATEGORIES_SUCCESS = 'GET_ALL_CATEGORIES_SUCCESS';

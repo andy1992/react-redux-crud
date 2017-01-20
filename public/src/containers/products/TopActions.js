@@ -1,5 +1,5 @@
 import React from 'react';
-import TopActions from './../components/products/TopActions';
+import TopActions from '../../components/products/TopActions';
 import { connect } from 'react-redux';
 import {
     deleteProducts,
@@ -12,7 +12,7 @@ import {
     countAllProductsFailed,
     countAllProductsSuccess,
     removeAll
-} from './../actions/products/actionCreators';
+} from '../../actions/productActions';
 
 function mapStateToProps(state, props) {
     return {
@@ -24,7 +24,7 @@ function mapStateToProps(state, props) {
 const mapDispatchToProps = (dispatch) => {
     return {
         deleteSelected: (selectedProducts) => {
-            if(selectedProducts.length > 0) {
+            if(selectedProducts && selectedProducts.length > 0) {
                 const r = confirm("Are you sure you want to delete the selected product(s)?");
                 if(r) {
                     const response = dispatch(deleteProducts(selectedProducts));
