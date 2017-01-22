@@ -18,15 +18,16 @@ $ git clone https://github.com/andy1992/react-redux-crud.git
 ```
 
 ####2. Install dependencies
+Install dependencies using npm
 ```sh
 npm install
 ```
 
 ####3. Import the database from /database directory to your MySQL Database
-Since the project used MySQL Database, you could find the exported database on the /database directory, and import it to your MySQL Database.
+Since the project used MySQL Database, you could find the exported database on the database directory, and import it to your MySQL Database.
 
 ####4. Setup config based on your environment on the config/database.php
-Set the hostname, database name, username, and password based on your database configuration.
+Set the hostname, database name, username, and password based on your MySQL database configuration.
 
 ```php
 
@@ -42,15 +43,27 @@ class Database{
 ```
 
 ####5. Setup allow access content origin
-Set the allow access content origin options in config/core.php, to allow the app to access the API.
+Set the allow access content origin options in config/core.php, to allow the app to access the API, based on the port used in webpack.config.js.
 
+#####webpack.config.js
+```js
+    // ...
+    entry: [
+        'webpack-dev-server/client?http://127.0.0.1:8080/',
+        'webpack/hot/only-dev-server',
+        './public/src/main.js'
+    ]
+    //...
+```
+
+#####config/core.php
 ```php
 
 <?php
 
 //...
 
-header('Access-Control-Allow-Origin: http://localhost:8000');
+header('Access-Control-Allow-Origin: http://localhost:8080');
 
 //...
 
@@ -59,11 +72,11 @@ header('Access-Control-Allow-Origin: http://localhost:8000');
 ```
 
 ####6. Setup API Endpoint in public/src/helpers/Constant.js.
-Set the API Endpoint to be used in the react app.
+Set the API Endpoint to be used in the react app, based on your PHP server host and port.
 
 ```js
 
-export const API_ENDPOINT = 'http://localhost:8000/react-redux-crud/api';
+export const API_ENDPOINT = 'http://localhost:8888/react-redux-crud/api';
 
 ```
 
