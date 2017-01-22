@@ -1,6 +1,12 @@
 ##REACT REDUX CRUD
 A simple CRUD application in React+Redux, with PHP serving the API, and MySQL Database.
 
+This project features some of basic functionalities such as:
+- User registration
+- User authentication
+- Basic CRUD functionalities + multiple data deletion
+- Pagination, sorting, and data filtering
+
 ![alt tag](http://i66.tinypic.com/iftzjb.png)
 
 ##Installation
