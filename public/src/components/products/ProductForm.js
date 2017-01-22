@@ -1,4 +1,5 @@
 import React from 'react';
+import Loader from '../../components/layouts/Loader';
 import { Link, browserHistory } from 'react-router';
 
 class ProductForm extends React.Component {
@@ -121,6 +122,7 @@ class ProductForm extends React.Component {
         // return the goddamn form
         return (
             <div>
+                <Loader isLoading={this.props.loading} />
                 {
                     this.state.successCreation ?
                         (

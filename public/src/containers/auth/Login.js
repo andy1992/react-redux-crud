@@ -13,9 +13,9 @@ import {
 const mapStateToProps = (state, props) => {
     return {
         isLoggedIn: state.auth.isLoggedIn.message,
-        state: state,
-        props: props,
-        user: state.auth.user
+        user: state.auth.user,
+        error: state.auth.error,
+        loading: state.auth.loading
     };
 };
 

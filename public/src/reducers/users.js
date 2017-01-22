@@ -1,7 +1,10 @@
 import {
     REGISTER,
     REGISTER_FAILED,
-    REGISTER_SUCCESS
+    REGISTER_SUCCESS,
+    UPDATE_PASSWORD,
+    UPDATE_PASSWORD_FAILED,
+    UPDATE_PASSWORD_SUCCESS
 } from './../actions/userActions';
 
 const INITIAL_STATE = {
@@ -10,7 +13,7 @@ const INITIAL_STATE = {
     error: null
 };
 
-export default function register(state = INITIAL_STATE, action) {
+export function register(state = INITIAL_STATE, action) {
     let error;
     switch(action.type) {
         case REGISTER:
@@ -28,6 +31,36 @@ export default function register(state = INITIAL_STATE, action) {
                 error: null
             };
         case REGISTER_FAILED:
+            error = action.payload || {message: action.payload.message};
+            return {
+                ...state,
+                response: null,
+                loading: false,
+                error: error
+            };
+        default:
+            return state;
+    }
+}
+
+export function updatePassword(state = INITIAL_STATE, action) {
+    let error;
+    switch(action.type) {
+        case UPDATE_PASSWORD:
+            return {
+                ...state,
+                response: null,
+                loading: true,
+                error: null
+            };
+        case UPDATE_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                response: action.payload,
+                loading: false,
+                error: null
+            };
+        case UPDATE_PASSWORD_FAILED:
             error = action.payload || {message: action.payload.message};
             return {
                 ...state,

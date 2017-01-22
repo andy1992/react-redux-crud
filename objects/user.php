@@ -152,7 +152,7 @@ class User{
     public function readOne(){
 
         // select one record
-        $query = "SELECT id, email, created_at
+        $query = "SELECT id, email, password, created_at
                     FROM " . $this->table_name . "
                     WHERE id=:id";
 
@@ -169,25 +169,44 @@ class User{
     }
 
     public function update(){
+        $query = "SELECT id, email, created_at, password
+                FROM " . $this->table_name . "
+                WHERE id = :id";
 
-        $query = "UPDATE users
-                SET password=:password
-                WHERE id=:id";
-
-        //prepare query for excecution
+        //prepare query for execution
         $stmt = $this->conn->prepare($query);
 
-        // sanitize
-        $password=htmlspecialchars(strip_tags($this->password));
+        $id = htmlspecialchars(strip_tags($this->id));
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
 
-        // bind the parameters
-        $stmt->bindParam(':password', $password);
+        $user = null;
+        $results=$stmt->fetchAll(PDO::FETCH_OBJ);
+        if(count($results) > 0) {
+            $result = $results[0];
+            $query = "UPDATE users
+                    SET password=:password
+                    WHERE id=:id";
 
-        // execute the query
-        if($stmt->execute()){
-            return true;
-        }else{
-            return false;
+            //prepare query for excecution
+            $stmt = $this->conn->prepare($query);
+
+            // sanitize
+            $password = htmlspecialchars(strip_tags($this->password));
+            $salted_password = password_hash($password, PASSWORD_BCRYPT);
+
+            // bind the parameters
+            $stmt->bindParam(':password', $salted_password);
+            $stmt->bindParam(':id', $id);
+
+            // execute the query
+            if($stmt->execute()){
+                return true;
+            }else{
+                return false;
+            }
+        } else {
+            return 'Cannot update your password. Please relog from your account and try again.';
         }
     }
 

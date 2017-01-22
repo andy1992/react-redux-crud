@@ -13,12 +13,13 @@ export default class Register extends React.Component
         this.state = {
             email: '',
             password: '',
-            passwordConfirmation: ''
+            passwordConfirmation: '',
+            successRegister: ''
         };
     }
 
     componentWillMount() {
-        if(this.props.isLoggedIn) {
+        if(this.props.loggedIn) {
             browserHistory.push('/');
         }
         this.props.setPageTitle('Sign Up');
@@ -52,6 +53,12 @@ export default class Register extends React.Component
         });
     }
 
+    componentWillReceiveProps(props) {
+        this.setState({
+            successRegister: props.response
+        });
+    }
+
     render() {
         return (
             <div>
@@ -59,7 +66,7 @@ export default class Register extends React.Component
                 <div className="col-md-4">
                     <form onSubmit={this.register}>
                         {
-                            (this.props.response && this.props.response == true)
+                            (this.state.successRegister == true)
                             ?
                                 <div className="alert alert-success">
                                     You have been registered successfully. You may now log in.
@@ -67,7 +74,7 @@ export default class Register extends React.Component
                             : null
                         }
                         {
-                            (this.props.response && this.props.response != true && this.props.response != '')
+                            (this.state.successRegister != true && this.state.successRegister != '')
                                 ?
                                 <div className="alert alert-danger">
                                     {this.props.response}

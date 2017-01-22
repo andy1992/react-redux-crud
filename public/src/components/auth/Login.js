@@ -7,7 +7,8 @@ export default class Login extends React.Component
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            successLogin: ''
         };
 
         this.login = this.login.bind(this);
@@ -16,7 +17,7 @@ export default class Login extends React.Component
     }
 
     componentWillMount() {
-        if(this.props.isLoggedIn) {
+        if(this.props.loggedIn) {
             browserHistory.push('/');
         }
         this.props.setPageTitle('Sign In');
@@ -35,9 +36,12 @@ export default class Login extends React.Component
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.state.auth.isLoggedIn == true && nextProps.state.auth.user) {
+        if (nextProps.loggedIn == true && nextProps.user) {
             browserHistory.push('/');
         }
+        this.setState({
+            successLogin: nextProps.error
+        });
     }
 
     login(e) {
@@ -56,9 +60,9 @@ export default class Login extends React.Component
                 <div className="col-md-4">
                     <form onSubmit={this.login}>
                         {
-                            (this.props.state.auth.error && this.props.state.auth.error.message != 'false') ?
+                            (this.state.successLogin && this.state.successLogin.message != 'false') ?
                                 <div className="alert alert-danger">
-                                    {this.props.state.auth.error.message}
+                                    {this.state.successLogin.message}
                                 </div>
                                 : null
                         }

@@ -24,7 +24,8 @@ function mapStateToProps(state, ownProps) {
     return {
         categories: state.categories.categories,
         successCreation: state.products.response,
-        product: product
+        product: product,
+        loading: state.products.loading
     };
 }
 

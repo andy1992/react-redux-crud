@@ -10,6 +10,7 @@ import ProductForm from './containers/products/ProductForm';
 import LoginForm from './containers/auth/Login';
 import RegistrationForm from './containers/user/Register';
 import GenericNotFound from './components/layouts/GenericNotFound';
+import ChangePasswordForm from './containers/user/ChangePassword';
 
 // Import react router dependencies
 import { Router, Route, IndexRoute, browserHistory }  from 'react-router';
@@ -27,6 +28,7 @@ const router = (
                 <Route path="/product/edit/:productId" component={ProductForm}></Route>
                 <Route path="/login" component={LoginForm}></Route>
                 <Route path="/register" component={RegistrationForm}></Route>
+                <Route path="/change-password" component={ChangePasswordForm}></Route>
                 <Route path='*' component={GenericNotFound} />
             </Route>
         </Router>

@@ -8,7 +8,8 @@ const defaultState = {
     products: [],
     categories: [],
     selectedProducts: [],
-    user: {}
+    user: {},
+    isLoggedIn: false
 };
 
 const store = createStore(rootReducer, defaultState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

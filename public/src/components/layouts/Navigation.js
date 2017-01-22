@@ -26,6 +26,7 @@ class NavComponent extends React.Component
                                     <ul className="nav navbar-nav">
                                         <li><Link to={'/'}>Home</Link></li>
                                         <li style={{paddingTop:15}}>Welcome, {this.props.user.email}</li>
+                                        <li><Link to={'/change-password'}>Change Password</Link></li>
                                         <li><Link onClick={this.props.signOut}>Sign Out</Link></li>
                                     </ul>
                                 </div>
