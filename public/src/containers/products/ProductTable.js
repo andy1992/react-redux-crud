@@ -66,9 +66,14 @@ const ProductTable = props =>
             <table className="table table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th className="text-center" style={{width:'1.5%'}}>
-                        <input type="checkbox" id="selectAll" onClick={() => props.toggleAll()} />
-                    </th>
+                    {
+                        (props.isLoggedIn)
+                            ?
+                            <th className="text-center" style={{width:'1.5%'}}>
+                                <input type="checkbox" id="selectAll" onClick={() => props.toggleAll()} />
+                            </th>
+                            : null
+                    }
                     <th style={{width:'20%'}}>
                         <Link
                             onClick={() => props.sortChanged(params, 'name')}
@@ -110,17 +115,16 @@ const ProductTable = props =>
             </table>
     );
 };
+
 function mapStateToProps(state, props) {
     const params = {
+    };
+    return {
         order_by: props.order_by,
         order_type: props.order_type,
         item_per_page: props.item_per_page,
         search: props.search,
         page: props.page
-    };
-    return {
-        params: params,
-        state: state
     };
 }
 

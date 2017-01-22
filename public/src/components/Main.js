@@ -29,13 +29,13 @@ class Main extends React.Component {
     render() {
         return (
             <div>
-                <NavBar signOut={this.signOut} isLoggedIn={this.props.state.auth.isLoggedIn} user={this.props.state.auth.user} />
+                <NavBar signOut={this.signOut} isLoggedIn={this.props.loggedIn} user={this.props.user} />
 
                 <div className="page-header" style={{marginTop:70}}>
                     <h1>{this.state.pageTitle}</h1>
                 </div>
 
-                {React.cloneElement(this.props.children, {...this.props, setPageTitle: this.setPageTitle, isLoggedIn: this.props.state.auth.isLoggedIn, user:this.props.state.auth.user})}
+                {React.cloneElement(this.props.children, {...this.props, setPageTitle: this.setPageTitle, isLoggedIn: this.props.isLoggedIn, user:this.props.user})}
             </div>
         )
     }

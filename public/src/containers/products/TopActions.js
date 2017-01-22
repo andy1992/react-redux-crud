@@ -16,8 +16,6 @@ import {
 
 function mapStateToProps(state, props) {
     return {
-        props: props,
-        state: state
     };
 }
 

@@ -34,10 +34,15 @@ class ProductRow extends React.Component
         const display = (this.props.isLoggedIn) ? '' : 'none';
         return (
             <tr>
-                <td>
-                    <input type="checkbox"
-                           className='checkboxes' onChange={this.onChange} checked={this.state.checked} />
-                </td>
+                {
+                    (this.props.isLoggedIn)
+                    ?
+                        <td>
+                            <input type="checkbox"
+                                   className='checkboxes' onChange={this.onChange} checked={this.state.checked} />
+                        </td>
+                    : null
+                }
                 <td>{this.props.product.name}</td>
                 <td>{this.props.product.description}</td>
                 <td>${parseFloat(this.props.product.price).toFixed(2)}</td>

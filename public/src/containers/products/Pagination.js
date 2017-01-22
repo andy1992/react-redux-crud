@@ -152,19 +152,15 @@ const Pagination = props =>
                 </div>
             </nav>
     );
-}
+};
 
 function mapStateToProps(state, props) {
-    const params = {
+    return {
         order_by: props.order_by,
         order_type: props.order_type,
         item_per_page: props.item_per_page,
         search: props.search,
         page: props.page
-    };
-    return {
-        params: params,
-        state: state
     };
 }
 
@@ -180,12 +176,11 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         gotoPage: (params) => {
             const pageInput = document.getElementById("page_input");
-            const pageAmount = Math.ceil(props.productsAmount / props.productsPerPage);
+            const pageAmount = Math.ceil(props.productsAmount / props.item_per_page);
             let destPage = parseInt(pageInput.value);
             if(destPage > pageAmount)
                 destPage = pageAmount;
 
-            console.log(destPage);
             params.page = destPage;
             const queryString = parseQueryString(params);
             browserHistory.push('/' + queryString);

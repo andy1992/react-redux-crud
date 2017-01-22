@@ -37,16 +37,12 @@ const SearchBar = (props) =>
 };
 
 function mapStateToProps(state, props) {
-    const params = {
+    return {
         order_by: props.order_by,
         order_type: props.order_type,
         item_per_page: props.item_per_page,
         search: props.search,
         page: props.page
-    };
-    return {
-        params: params,
-        state: state
     };
 }
 

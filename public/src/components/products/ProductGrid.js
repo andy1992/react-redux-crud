@@ -63,13 +63,13 @@ export default class ProductGrid extends React.Component {
                 <SearchBar {...params} />
 
                 {
-                    (this.props.isLoggedIn)
+                    (this.props.loggedIn)
                         ?
                         <TopActions selectedProducts={selectedProducts} />
                         : null
                 }
 
-                <ProductTable isLoggedIn={this.props.isLoggedIn} user={this.props.user} products={products}
+                <ProductTable isLoggedIn={this.props.loggedIn} user={this.props.user} products={products}
                               {...params}
                                 selectedProducts={selectedProducts}/>
 
