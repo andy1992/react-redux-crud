@@ -1,19 +1,3 @@
-/*const path = require('path');
-const express = require('express');
-
-module.exports = {
-    app: function() {
-        const app = express();
-        const indexPath = path.join(__dirname, '/index.html');
-        const publicPath = express.static(path.join(__dirname, '/public'));
-
-        app.use('/public', publicPath);
-        app.get('/', function(_, res){ res.sendFile(indexPath) });
-
-        return app;
-    }
-};*/
-
 import path from 'path';
 import express from 'express';
 import webpack from 'webpack';
@@ -24,15 +8,20 @@ import open from 'open';
 
 const app = express();
 const compiler = webpack(config);
+const indexPath = path.join(__dirname, '/index.html');
+const publicPath = express.static(path.join(__dirname, '/public'));
+const port = 3000;
 
-app.use(express.static(__dirname + '/index.html'));
+app.use('/public', publicPath);
+
+// Use Webpack. Comment the next 2 lines when you are deploying to production server
 app.use(webpackMiddleware(compiler));
-app.use(webpackHotMiddleware(compiler)); // And this line
+app.use(webpackHotMiddleware(compiler));
+
 app.get('*', function response(req, res) {
-    res.sendFile(path.join(__dirname, '/public'));
+    res.sendFile(indexPath);
 });
 
-const port = 3000;
 app.listen(port, function(err) {
     if (err) {
         console.log(err);

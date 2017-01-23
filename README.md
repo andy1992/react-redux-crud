@@ -43,18 +43,8 @@ class Database{
 ```
 
 ####5. Setup allow access content origin
-Set the allow access content origin options in config/core.php, to allow the app to access the API, based on the port used in webpack.config.js.
-
-#####webpack.config.js
-```js
-    // ...
-    entry: [
-        'webpack-dev-server/client?http://127.0.0.1:8080/',
-        'webpack/hot/only-dev-server',
-        './public/src/main.js'
-    ]
-    //...
-```
+Set the allow access content origin options in config/core.php, to allow the app to access the API.
+Of course for the sake of simplicity / development purpose, you could always set the header to *.
 
 #####config/core.php
 ```php
@@ -63,7 +53,7 @@ Set the allow access content origin options in config/core.php, to allow the app
 
 //...
 
-header('Access-Control-Allow-Origin: http://localhost:8080');
+header('Access-Control-Allow-Origin: *');
 
 //...
 
@@ -82,6 +72,28 @@ export const API_ENDPOINT = 'http://localhost:8888/react-redux-crud/api';
 
 ####7. Run the app
 
+#####7.1. Development
+Run webpack dev server from your terminal / command prompt.
 ```sh
 webpack-dev-server --history-api-fallback
+```
+
+#####7.2. Production
+Turn off the webpack dev server configuration in webpack.config.js
+```js
+    entry: [
+        //'webpack-dev-server/client?http://127.0.0.1:8080/',
+        //'webpack/hot/only-dev-server',
+        './public/src/main.js'
+    ]
+```
+
+Build the bundle.js and index.html.
+```sh
+npm run build
+```
+
+Run the app:
+```sh
+npm start
 ```
