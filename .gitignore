@@ -1,0 +1,7 @@
+node_modules/
+.vs/
+.vscode/
+public/bundle.js
+public/bundle.js.map
+public/index.html
+package-lock.json
